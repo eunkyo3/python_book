@@ -46,7 +46,7 @@ def parsing(host):
 
 
 def parse_ip_header(ip_header): # 패킷을 바이트 형태로 받아 헤더와 나머지 부분으로 반환합니다.
-    ip_headers=struct.unpack("!BBHHHBBH4s4s", ip_header[:20]) # struct 모듈로 byte를 편하게 다룰 수 있다. 
+    ip_headers=struct.unpack("!BBHHHBBH4s4s", ip_header[:20]) # struct 모듈로 byte를 편하게 다룰 수 있다. (C, python)B: uchar 정수, H: hshort 정수, s: char bytes, L: ulong 정수, Q: ullong 정수   
                                         #Unpack의 첫 번째 인자에 해당하는 알파벳 형식에 따라 앞에서부터 byte를 끊어 튜플 형태로 반환. 두 번째 인자는 byte를 받음 !는 네트워크 byte 순서 의미
     ip_payloads=ip_header[20:]
     return ip_headers, ip_payloads
