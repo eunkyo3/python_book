@@ -13,3 +13,20 @@ def parse_icmp_header(icmp_data):
     icmp_headers=struct.unpack("!BBHHH", icmp_data[:8])
     icmp_payloads=icmp_data[8:]
     return icmp_headers, icmp_payloads
+
+
+def parsing(host):
+    #raw socket 생성 및 bind
+    if os.name=="nt":
+        sock_protocol=IPPROTO_IP
+    else:
+        sock_protocol=IPPROTO_ICMP
+    sock=socket(AF_INET, SOCK_RAW, sock_protocol)
+    sock.bind((host, 0))
+
+    #socket 옵션
+    sock.setsockopt(IPPROTO_IP, IP_HDRINCL, 1)
+
+    #promiscuous mode 켜기
+    if os.name=="nt":
+        sock.ioctl(SIO_RCVALL, RCVALL_ON)    
